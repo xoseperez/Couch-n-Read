@@ -11,35 +11,6 @@ import entryhandler
 DB_HOST = 'http://127.0.0.1:5984'
 DB_NAME = 'tellico'
 
-def load_entry(entry):
-    '''
-    Adds new entry to database
-    '''
-
-    # Get related records
-    authors = load_related(Author, entry.get('author', []))
-    languages = load_related(Language, entry.get('language', []))
-    owners = load_related(Owner, entry.get('propietari', []))
-    publishers = load_related(Publisher, [entry.get('publisher', None)])
-
-    # Create the book object with attributes
-    b = Book(
-        title=entry['title'],
-        publisher=publishers[0],
-        owner=owners[0],
-        year=entry.get('cr_year', None),
-        publication_year=entry.get('pub_year', None),
-        isbn=entry.get('isbn', None)
-    )
-    b.save()
-
-    # Link the book to the related tables
-    for author in authors:
-        b.author.add(author)
-    for language in languages:
-        b.language.add(language)
-    b.save()
-
 def load_database(entries):
     '''
     Loads entries data into database
