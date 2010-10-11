@@ -28,6 +28,10 @@ def load_database(entries):
     for entry in entries:
         db.create(json.dumps(entry))
 
+def show_entries(entries):
+    for entry in entries:
+        print json.dumps(entry)
+    
 def import_tellico(tellico_file):
     '''
     Gets entries list from SAX Parser
@@ -47,6 +51,7 @@ def main():
         print 'Usage: python import.py <tellico_file>'
         sys.exit(-1)
     load_database(import_tellico(args[0]))
+    #show_entries(import_tellico(args[0]))
 
 if __name__ == '__main__':
     main()
